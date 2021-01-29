@@ -44,7 +44,7 @@ export const Form = () => {
         // Check if is in the past
         if (currentYearMontDay <= dateFromInput) {
             return false
-        } else{
+        } else {
            return true
         }
   
@@ -150,13 +150,14 @@ export const Form = () => {
              
     return (
                    
-        <form className = 'd-flex flex-column mt-0 mb-0'
+        <form className = 'col-lg-6 offset-lg-3 '
             onSubmit = {handleSubmitForm}
             ref={formRef} 
         >
-            <div className = "d-flex" >
-                <div className="col-md-6 position-relative">
-                    <label htmlFor="validationTooltip01" className="form-label">
+            <div className = "col ml-auto" >
+
+                <div className = "col align-self-center" >
+                    <label htmlFor = "validationTooltip01" className = "form-label mt-3" >
                         First name
                     </label>
                     <input type="text" 
@@ -165,15 +166,15 @@ export const Form = () => {
                             placeholder = 'Name'
                             onChange={handleChange}
                             onBlur={check}
-                            />
+                    />
                     
                     <div style={{color: 'red', fontSize: '12px'}}>
                         {errors.nameError}
                     </div>               
                 </div>
                          
-                <div className = "col-md-6 position-relative " >
-                    <label htmlFor="validationTooltip01 " className="form-label">
+                <div className = "col align-self-center" >
+                    <label htmlFor="validationTooltip01 " className="form-label mt-3">
                         Last name
                     </label>
                     <input type="text" 
@@ -187,9 +188,8 @@ export const Form = () => {
                        {errors.lastNameError}
                     </div>
                 </div>
-            </div>            
-            <div className = "d-flex" >
-                <div className="col-md-6 position-relative">
+            
+                <div className = "col align-self-center" >
                     <label htmlFor="validationTooltip02" className="form-label mt-3">
                         Birthday:
                     </label>
@@ -204,51 +204,51 @@ export const Form = () => {
                        {errors.birthDayError}
                     </div>
                 </div>       
-            </div>
-
-            <div className = "d-flex flex-column" >
-                    <div className="col-md-6 position-relative">
-                            <label htmlFor="validationTooltip04" className="form-label mt-3">
-                                User Type:
-                            </label>
-                            <select className = "form-control"
-                                id = "validationTooltip04"
-                                name = "userType"
-                                onChange = {changeDestable}
-                                onBlur = {check} 
-                                >
-                                    <option value = "active" > Active </option> 
-                                    <option value = "unActive" > UnAactive </option>
-                            </select>
+            
+                <div className = "col align-self-center">
+                    <label htmlFor="validationTooltip04" className="form-label mt-3">
+                        User Type:
+                    </label>
+                    <select className = "form-control"
+                            id = "validationTooltip04"
+                            name = "userType"
+                            onChange = {changeDestable}
+                            onBlur = {check} 
+                            >
+                            <option value = "active" > Active </option> 
+                            <option value = "unActive" > UnAactive </option>
+                    </select>
                             
-                        </div>
+                </div>
                        
-                        <div className="col-md-6 position-relative">
-                            <label htmlFor = "validationTooltip01"
-                            className = "form-label mt-3" >
-                                Users Inactivities Date:
-                            </label>
-                            <input  type = "text"
-                                    className = "form-control"
-                                    name = "userInactivitiesDate"
-                                    onChange={handleChange}
-                                    onBlur={check}
-                                    disabled = {distabled}
-                                    placeholder = 'YYYY-MM-DD'
-                                    />
-                        <div style={{color: 'red',fontSize: '12px'}}>
+                <div className = "col align-self-center" >
+                        <label htmlFor = "validationTooltip01" className = "form-label mt-3" >
+                            Users Inactivities Date:
+                        </label>
+                    <input type = "text"
+                            className = "form-control"
+                            name = "userInactivitiesDate"
+                            onChange={handleChange}
+                            onBlur={check}
+                            disabled = {distabled}
+                            placeholder = 'YYYY-MM-DD'
+                    />
+                    <div style={{color: 'red',fontSize: '12px'}}>
                             {errors.userInactivitiesDateError}
-                        </div>
                     </div>
+                </div>
     
+           
+                < div className = "span btn-block" >
+                    <button 
+                        className="btn btn-medium btn-block btn-outline-primary mt-4" 
+                        type="submit" 
+                        style={{fontSize: '12px'}}
+                        >
+                            Submit
+                    </button>
+                </div>
             </div>
-                <button 
-                    className="btn btn-outline-primary mt-2 mb-0" 
-                    type="submit" 
-                    style={{fontSize: '12px'}}
-                    >
-                        SAVE
-                </button>
         </form>
         
     );
