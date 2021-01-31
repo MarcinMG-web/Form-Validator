@@ -6,6 +6,7 @@ export const Form = () => {
     const initialState = {
         name: '',
         lastName: '',
+        email: '',
         birthday: '',
         userType: 'avtive',
         userInactivitiesDate: ''
@@ -14,6 +15,7 @@ export const Form = () => {
     const initialError = {
         nameError: '',
         lastNameError: '',
+        emailError: ' ',
         birthDayError: '',
         userInactivitiesDateError: ''
     }
@@ -21,6 +23,7 @@ export const Form = () => {
     const [form, setForm] = useState(initialState)
     const [errors, setErrors] = useState(initialError)
     const [distabled, setDistabled] = useState(true)
+    const [sendFormText, setSendFormText] = useState('')
 
     const formRef = useRef();
 
@@ -54,6 +57,7 @@ export const Form = () => {
     const validate = () => {
         let nameError = '';
         let lastNameError = '';
+        let emailError = '';
         let birthDayError = '';
         let userInactivitiesDateError = ''
 
@@ -72,17 +76,35 @@ export const Form = () => {
         if (!form.lastName) {
             lastNameError = 'Please, provide your last name'
         }
-       
+
+        if (!form.email) {
+            emailError = 'Please, provide your email'
+        }
+
+        function validateEmail(email) {
+            const pattern = /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{3,9}[\.][a-z]{2,5}/g;
+            const result = pattern.test(email);
+            if (result) {
+                emailError = ''
+            } else {
+                emailError = 'Do not corret email. Email should have format user@domain.com'
+            }
+        }
+
+        validateEmail(form.email)
+          
         function validateDate(date) {
-            try {
-                new Date(date).toISOString();
-                    if (!checkIfInThePast(date)) {
-                        birthDayError = 'Birthdate should have date in the past';
-                    }
-                
-            } catch  {
+            const pattern = /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/
+            const result = pattern.test(date);
+
+            if (result) {
+                if (!checkIfInThePast(date)) {
+                    birthDayError = 'Birthdate should have date in the past';
+                }
+            } else {
                 birthDayError = 'Birthdate should have format YYYY-MM-DD';
             }
+            
         }
 
         if (form.birthday){            
@@ -90,26 +112,29 @@ export const Form = () => {
         }
         
         function validateDateInteractivities(date) {
-            try {
-                new Date(date).toISOString();
-                    if (!checkIfInThePast(date)) {
-                        userInactivitiesDateError = 'Date should have date in the past';
-                    }
-   
-            } catch  {
+            const pattern = /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/
+            const result = pattern.test(date);
+
+            if (result) {
+                if (!checkIfInThePast(date)) {
+                    userInactivitiesDateError = 'Date should have date in the past';
+                }
+            } else {
                 userInactivitiesDateError = 'Date should have format YYYY-MM-DD';
             }
+           
         }
         
         if (!distabled) {
             validateDateInteractivities(form.userInactivitiesDate)
         } 
               
-        if (nameError || lastNameError || birthDayError || userInactivitiesDateError){
+        if (nameError || lastNameError || emailError || birthDayError || userInactivitiesDateError) {
 
             setErrors({
                 nameError,
                 lastNameError,
+                emailError,
                 birthDayError,
                 userInactivitiesDateError
             })
@@ -148,6 +173,7 @@ export const Form = () => {
         setForm(initialState)
         setDistabled(true)
         setErrors(initialError)
+        setSendFormText('')
     }
     
     // Send form
@@ -157,6 +183,7 @@ export const Form = () => {
         const isValid = validate()
         if (isValid) {
             console.log('Form wysłany', form)
+            setSendFormText('Thank you, the form was sent successfully!')
             saveUserForm(form)
 
             //clear form
@@ -204,6 +231,22 @@ export const Form = () => {
                             />
                    <div style={{color: 'red',fontSize: '12px'}}>
                        {errors.lastNameError}
+                    </div>
+                </div>
+
+                <div className = "col align-self-center" >
+                    <label htmlFor="validationTooltip01 " className="form-label mt-3">
+                       Email
+                    </label>
+                    <input type="email" 
+                            name = 'email'
+                            className="form-control" 
+                            placeholder = 'user@domain.com'
+                            onChange={handleChange}
+                            onBlur={check}
+                            />
+                   <div style={{color: 'red',fontSize: '12px'}}>
+                       {errors.emailError}
                     </div>
                 </div>
             
@@ -255,8 +298,7 @@ export const Form = () => {
                             {errors.userInactivitiesDateError}
                     </div>
                 </div>
-    
-           
+                           
                 <div className = "d-flex justify-content-center" >
                     <button 
                         className="btn btn-medium btn-block btn-outline-danger mt-4" 
@@ -266,12 +308,24 @@ export const Form = () => {
                            Clear Form
                     </button>
                     <button 
-                        className="btn btn-medium btn-block btn-outline-primary mt-4" 
+                        className="btn btn-medium btn-block btn-outline-success mt-4" 
                         type="submit" 
                         style={{fontSize: '12px'}}
                         >
                             Submit
                     </button>
+                </div>
+
+                <div className = "col align-self-center mt-4" >
+                    <div style = {
+                        {
+                            color: 'green',
+                            fontSize: '24px',
+                            fontFamily: 'Lato',
+                        }
+                    }>
+                            {sendFormText}
+                    </div>
                 </div>
             </div>
         </form>
