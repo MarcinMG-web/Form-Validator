@@ -147,6 +147,13 @@ export const Form = () => {
         }
     }
 
+    const clearForm = () => {
+        formRef.current.reset();
+        setForm(initialState)
+        setDistabled(true)
+        setErrors(initialError)
+    }
+
              
     return (
                    
@@ -239,7 +246,14 @@ export const Form = () => {
                 </div>
     
            
-                < div className = "span btn-block" >
+                <div className = "d-flex justify-content-center" >
+                    <button 
+                        className="btn btn-medium btn-block btn-outline-danger mt-4" 
+                        onClick = {clearForm}
+                        style={{fontSize: '12px'}}
+                        >
+                           Clear Form
+                    </button>
                     <button 
                         className="btn btn-medium btn-block btn-outline-primary mt-4" 
                         type="submit" 
