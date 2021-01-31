@@ -57,8 +57,16 @@ export const Form = () => {
         let birthDayError = '';
         let userInactivitiesDateError = ''
 
+        if(form.name.length <= 2){
+            nameError = 'Name is too short'
+        }
+
         if (!form.name){
             nameError = 'Please, provide your name'
+        }
+
+        if (form.lastName.length <= 2) {
+            lastNameError = 'Last name is too short'
         }
 
         if (!form.lastName) {
@@ -76,8 +84,11 @@ export const Form = () => {
                 birthDayError = 'Birthdate should have format YYYY-MM-DD';
             }
         }
-        validateDate(form.birthday)
 
+        if (form.birthday){            
+            validateDate(form.birthday)
+        }
+        
         function validateDateInteractivities(date) {
             try {
                 new Date(date).toISOString();
@@ -107,23 +118,8 @@ export const Form = () => {
         return true
       }
     
-    // Send form
-    const handleSubmitForm = (e) => {
-        e.preventDefault();
-        
-        const isValid = validate()
-        if (isValid) {
-            console.log('Form wysłany', form)
-            saveUserForm(form)
-
-            //clear form
-            formRef.current.reset();
-            setForm(initialState)
-            setErrors(initialError)
-        }        
-    }
-    
-    const check = () => {
+      
+      const check = () => {
 
         const isValid = validate()
         if (isValid) {
@@ -153,8 +149,23 @@ export const Form = () => {
         setDistabled(true)
         setErrors(initialError)
     }
+    
+    // Send form
+    const handleSubmitForm = e => {
+        e.preventDefault();
+        
+        const isValid = validate()
+        if (isValid) {
+            console.log('Form wysłany', form)
+            saveUserForm(form)
 
-             
+            //clear form
+            formRef.current.reset();
+            setForm(initialState)
+            setErrors(initialError)
+        }        
+    }
+    
     return (
                    
         <form className = 'col-lg-6 offset-lg-3 '
